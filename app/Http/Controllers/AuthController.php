@@ -1,13 +1,17 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use Validator;
 use App\User;
+use App\BadgeUser;
 use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
 use Firebase\JWT\ExpiredException;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Lumen\Routing\Controller as BaseController;
-class AuthController extends BaseController 
+
+class AuthController extends Controller 
 {
     /**
      * The request instance.
@@ -23,6 +27,8 @@ class AuthController extends BaseController
      */
     public function __construct(Request $request) {
         $this->request = $request;
+        $this->id = 0;
+        $this->user = new User();
     }
 
     /**
@@ -74,30 +80,43 @@ class AuthController extends BaseController
 
     public function register(User $user) {
 
-            $this->validate($this->request, [
+        try {
+        
+            $rules = array(
                 'name'              => 'required',
                 'email'             => 'required|email',
                 'password'          => 'required',
                 'confirm_password'  => 'required|same:password'
-            ]);
+            );
 
-            $cek = User::where('email', $this->request->input('email'))->first();
+            $this->withValidator($this->request->all(), $rules);
+
+            $cek = $this->user->where('email', $this->request->input('email'))->first();
             if($cek) {
-                return response()->json([
-                    'error' => 'Email sudah ada.'
-                ], 400);
+                $this->throwException('Email sudah terdaftar');
             }
 
-            $insert = [];
+            $this->user->email = $this->request->input('email');
+            $this->user->name = $this->request->input('name');
+            $this->user->password = password_hash($this->request->input('password'), PASSWORD_BCRYPT);
+            $this->user->save();
 
-            $insert['email'] = $this->request->input('email');
-            $insert['name'] = $this->request->input('name');
-            $insert['password'] = password_hash($this->request->input('password'), PASSWORD_BCRYPT);
+            $user_detail = new BadgeUser();
+            $user_detail->user_id = $user->id;
+            $user_detail->total_checkin = 0;
+            $user_detail->level_id = 1;
+            $user_detail->badge_id = 1;
 
-            $data = User::create($insert);
+            $this->user->detail()->save($user_detail);
+
+            //$data = [];
+            $data = $this->user;
+            $data['detail'] = $this->user->detail;
             
-            return response()->json([
-                'data' => $data
-            ]);
+            return $this->toSuccessJSON('Data Berhasil Disimpan', $data);
+
+        } catch (\Exception $e) {
+            return $this->toErrorsJSON($e);
+        }
     }
 }

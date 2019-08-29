@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\BadgeUser;
 use Illuminate\Auth\Authenticatable;
 use Laravel\Lumen\Auth\Authorizable;
 use Illuminate\Database\Eloquent\Model;
@@ -29,4 +30,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $hidden = [
         'password',
     ];
+
+    public function detail()
+    {
+        return $this->hasOne(BadgeUser::class);
+    }
 }

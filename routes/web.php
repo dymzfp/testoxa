@@ -38,9 +38,26 @@ $router->group(['prefix' => 'api/v1'], function () use ($router) {
 	    ['middleware' => 'jwt.auth'], 
 	    function() use ($router) {
 	        $router->get('users', function(Request $request) {
-	            $users = \App\User::where('id', $request->auth)->first();
-	        	return $users;
+	        	return $request->auth;
 	        });
+
+	        $router->group(['prefix' => 'levels'], function () use ($router) {
+				$router->get('/', 'LevelController@index');
+				$router->post('/', 'LevelController@store');
+				$router->get('/{id}', 'LevelController@getOne');
+				$router->put('/{id}', 'LevelController@update');
+				$router->delete('/{id}', 'LevelController@delete');
+		    });
+
+	        $router->group(['prefix' => 'badges'], function () use ($router) {
+				$router->get('/', 'BadgeController@index');
+				$router->post('/', 'BadgeController@store');
+				$router->get('/{id}', 'BadgeController@getOne');
+				$router->put('/{id}', 'BadgeController@update');
+				$router->delete('/{id}', 'BadgeController@delete');
+		    });
+
+		    $router->post('checkin', 'CheckinController@index');
 	    }
 	);
 

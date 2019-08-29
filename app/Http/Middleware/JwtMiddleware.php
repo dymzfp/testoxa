@@ -11,8 +11,9 @@
     {
         public function handle($request, Closure $next, $guard = null)
         {
-            $token = $request->get('token');
-            
+            //$token = $request->get('token');
+            $token = $request->bearerToken();
+
             if(!$token) {
                 return response()->json([
                     'error' => 'Token not provided.'
@@ -30,7 +31,7 @@
                 ], 400);
             }
             $user = User::find($credentials->sub);
-            $request->auth = $user['id'];
+            $request->auth = $user;
             return $next($request);
         }
     }
