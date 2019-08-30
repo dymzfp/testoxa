@@ -9,7 +9,7 @@
 ## Requirements
 * PHP => 7.1x
 * Postman => [Download](https://www.getpostman.com/downloads/)
-* MYSQL / PostgreSQL Database
+* MYSQL Database
 
 ## Setup Project
 
@@ -24,11 +24,11 @@ cp .env.example .env
 * edit necessary configuration 
 ```
 DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
+DB_HOST=your_database_host
 DB_PORT=3306
-DB_DATABASE= your database
-DB_USERNAME= your database username
-DB_PASSWORD= your database password
+DB_DATABASE=your_database
+DB_USERNAME=your_database_username
+DB_PASSWORD=your_database_password
 ```
 
 * setting your app key and your jwt screet
@@ -61,7 +61,7 @@ php -S localhost:8000 -t public
  
 ## Screenshot
 
- All screenshot response [more detail](https://github.com/dymzfp/testoxa/tree/master/screenshot)
+ All screenshot response [screenshot](https://github.com/dymzfp/testoxa/tree/master/screenshot)
 
 ## License
 
