@@ -37,10 +37,10 @@ APP_KEY=your_app_key
 JWT_SECRET=your_jwt_screet
 ```
 
-* run migration
+* import database
 
 ```bash
-php artisan migrate:fresh --seed
+./database.sql
 ```
 
 * start the server
