@@ -49,8 +49,17 @@ php artisan migrate:fresh --seed
 php -S localhost:8000 -t public
 ```
 
-## Postman Colection
+## To test request API
 
+ * open postman
+ * import from ```./postman``` to your postman
+ * test request
+ 
+## Notes
+ 
+ For auth using Bearer token.
+ 
+## Screenshot
 
 ## License
 
