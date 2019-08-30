@@ -55,7 +55,7 @@ class LevelController extends Controller
 
             \DB::commit();
 
-            return $this->toSuccessJSON('Data Berhasil Disimpan', $this->level);
+            return $this->toSuccessJSON('Data Successfully Saved', $this->level);
         } catch (\Exception $e) {
             \DB::rollback();
             return $this->toErrorsJSON($e);
@@ -91,7 +91,7 @@ class LevelController extends Controller
             
             \DB::commit();
 
-            return $this->toSuccessJSON('Data Berhasil Diedit', $row);
+            return $this->toSuccessJSON('Data Successfully Edited', $row);
         } catch (\Exception $e) {
             \DB::rollback();
             return $this->toErrorsJSON($e);
@@ -110,7 +110,7 @@ class LevelController extends Controller
         
             $data['id'] = $id;
 
-            return $this->toSuccessJSON('Data Berhasil Dihapus', $data);
+            return $this->toSuccessJSON('Data Successfully Removed', $data);
         } catch (\Exception $e) {
             return $this->toErrorsJSON($e);
         }

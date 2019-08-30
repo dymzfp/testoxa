@@ -55,7 +55,7 @@ class BadgeController extends Controller
 
             \DB::commit();
 
-            return $this->toSuccessJSON('Data Berhasil Disimpan', $this->badge);
+            return $this->toSuccessJSON('Data Saved Successfully', $this->badge);
         } catch (\Exception $e) {
             \DB::rollback();
             return $this->toErrorsJSON($e);
@@ -91,7 +91,7 @@ class BadgeController extends Controller
             
             \DB::commit();
 
-            return $this->toSuccessJSON('Data Berhasil Diedit', $row);
+            return $this->toSuccessJSON('Data Successfully Edited', $row);
         } catch (\Exception $e) {
             \DB::rollback();
             return $this->toErrorsJSON($e);
@@ -110,7 +110,7 @@ class BadgeController extends Controller
         
             $data['id'] = $id;
 
-            return $this->toSuccessJSON('Data Berhasil Dihapus', $data);
+            return $this->toSuccessJSON('Data Successfully Removed', $data);
         } catch (\Exception $e) {
             return $this->toErrorsJSON($e);
         }

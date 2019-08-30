@@ -36,6 +36,6 @@ class Controller extends BaseController
     }
 
     public function throwInvalidData() {
-        $this->throwException('Data tidak ada');
+        $this->throwException('Missing data');
     }
 }

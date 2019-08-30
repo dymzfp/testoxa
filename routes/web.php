@@ -38,7 +38,7 @@ $router->group(['prefix' => 'api/v1'], function () use ($router) {
 	    ['middleware' => 'jwt.auth'], 
 	    function() use ($router) {
 	        $router->get('users', function(Request $request) {
-	        	return $request->auth;
+	        	return $request->auth->detail;
 	        });
 
 	        $router->group(['prefix' => 'levels'], function () use ($router) {

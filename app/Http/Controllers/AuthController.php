@@ -68,9 +68,17 @@ class AuthController extends Controller
         }
         
         if (Hash::check($this->request->input('password'), $user->password)) {
-            return response()->json([
-                'token' => $this->jwt($user)
-            ], 200);
+
+            $data = $user;
+            $data->detail->level = $user->detail->level;
+            $data->detail->badge = $user->detail->badge;
+            $data->token = $this->jwt($user); 
+
+            return $this->toSuccessJSON('Checkin success', $data);
+
+            // return response()->json([
+            //     'token' => $this->jwt($user)
+            // ], 200);
         }
 
         return response()->json([
@@ -93,7 +101,7 @@ class AuthController extends Controller
 
             $cek = $this->user->where('email', $this->request->input('email'))->first();
             if($cek) {
-                $this->throwException('Email sudah terdaftar');
+                $this->throwException('Email already registered');
             }
 
             $this->user->email = $this->request->input('email');
@@ -111,9 +119,12 @@ class AuthController extends Controller
 
             //$data = [];
             $data = $this->user;
-            $data['detail'] = $this->user->detail;
+            $data->detail = $this->user->detail;
+
+            $data->detail->level = $this->user->detail->level;
+            $data->detail->badge = $this->user->detail->badge;
             
-            return $this->toSuccessJSON('Data Berhasil Disimpan', $data);
+            return $this->toSuccessJSON('Data Saved Successfully', $data);
 
         } catch (\Exception $e) {
             return $this->toErrorsJSON($e);
