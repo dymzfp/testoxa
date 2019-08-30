@@ -37,7 +37,7 @@ APP_KEY=your_app_key
 JWT_SECRET=your_jwt_screet
 ```
 
-* import database
+* import table
 
 ```bash
 ./database.sql
